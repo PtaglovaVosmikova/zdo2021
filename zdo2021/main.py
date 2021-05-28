@@ -43,7 +43,7 @@ class VarroaDetector():
         print("ahoj")
         output = np.zeros_like(data[...,0])
         
-        for m in range(data.shape[0])
+        for m in range(data.shape[0]):
             #obr = "d:\images\Original_1200_image (1).jpg"
             #obr_k = "d:\images\Original_1200_image (1) kopie.jpg"
 
