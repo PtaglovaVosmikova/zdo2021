@@ -1,5 +1,23 @@
 import numpy as np
-# moduly v lokálním adresáři musí být v pythonu 3 importovány s tečkou
+import scipy
+import scipy.misc
+from scipy import stats
+from scipy import ndimage
+import numpy as np
+import urllib
+import skimage
+import skimage.color
+import skimage.io
+import skimage.exposure
+import skimage.data as dt
+import skimage.morphology
+import matplotlib.pyplot as plt
+from skimage import data
+import pylab as pl
+from skimage import transform as tf
+from PIL import Image, ImageFilter
+from skimage.feature import canny
+import glob
 from . import podpurne_funkce
 
 class VarroaDetector():
