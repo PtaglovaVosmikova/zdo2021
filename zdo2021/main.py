@@ -18,7 +18,6 @@ from skimage import transform as tf
 from PIL import Image, ImageFilter
 from skimage.feature import canny
 import glob
-from . import podpurne_funkce
 
 class VarroaDetector():
     def __init__(self):
@@ -50,8 +49,8 @@ class VarroaDetector():
 
             img_vyrez_v = obr_v
             gaussian_img_v = ndimage.gaussian_filter(img_vyrez_v, sigma=2)
-            img_tr_v = (gaussian_img_v < 0.32)
-            imgQR_tr = (img_vyrez_v < 0.45)
+            img_tr_v = (gaussian_img_v < 0.32 * 10 ** -7)
+            imgQR_tr = (img_vyrez_v < 0.45 * 10 ** -7)
 
             kernel_img3 = skimage.morphology.square(5).astype(np.uint8)
             imgQR_tr_op = skimage.morphology.binary_opening(imgQR_tr, kernel_img3)
