@@ -116,7 +116,8 @@ class VarroaDetector():
             kernel_img2 = skimage.morphology.square(3).astype(np.uint8)
             img_tr_er = skimage.morphology.binary_erosion(img_tr_v, kernel_img2)
             img_tr_rso = skimage.morphology.remove_small_objects(img_tr_er, small)
-            img_tr_di = skimage.morphology.binary_dilation(img_tr_rso, kernel_img2)
+            img_tr_fh = ndimage.binary_fill_holes(img_tr_rso)
+            img_tr_di = skimage.morphology.binary_dilation(img_tr_fh, kernel_img2)
         
             img_label = skimage.morphology.label(img_tr_rso > 0)
             props = skimage.measure.regionprops(img_label+1)
