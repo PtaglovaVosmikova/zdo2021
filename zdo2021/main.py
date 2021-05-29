@@ -32,7 +32,6 @@ class VarroaDetector():
             image = img_fotky[np.newaxis, ...]
             f = np.asarray(image)
             data[i,:,:,:] = f
-        
         pass
 
     def predict(self, data):
@@ -40,20 +39,14 @@ class VarroaDetector():
         :param data: np.ndarray with shape [pocet_obrazku, vyska, sirka, barevne_kanaly]
         :return: shape [pocet_obrazku, vyska, sirka], 0 - nic, 1 - varroa destructor
         """
-        print("ahoj")
         output = np.zeros_like(data[...,0])
         
         for m in range(data.shape[0]):
-            #obr = "d:\images\Original_1200_image (1).jpg"
-            #obr_k = "d:\images\Original_1200_image (1) kopie.jpg"
-
-            #img = skimage.io.imread(obr)
-            #img_k = skimage.io.imread(obr_k)
             img = data[m,:,:,:]
             umg_hsv = skimage.color.rgb2hsv(img)
-
+            
+            # kanál Value
             obr_v = umg_hsv[:,:,2]
-            #obr_k_vyr = img_k
 
             img_vyrez_v = obr_v
             gaussian_img_v = ndimage.gaussian_filter(img_vyrez_v, sigma=2)
@@ -103,20 +96,22 @@ class VarroaDetector():
             a1 = propsQR[ctverec_max_id1].area
             a2 = propsQR[ctverec_max_id2].area
             a3 = propsQR[ctverec_max_id3].area
-        
+            
+            # test nalezených čtverců
             if a2/a1 < 0.8:
-                print("jen 1")
+                #print("jen 1")
                 prum_a = a1
             elif a2/a1 > 0.8 and a3/a2 <0.8:
-                print("jen 2")
+                #print("jen 2")
                 prum_a = (a1 + a2) / 2
             else:
-                print("všechny 3")
+                #print("všechny 3")
                 prum_a = (a1 + a2 + a3) / 3
             
-            print ("průměrná area: ", prum_a)
+            #print ("průměrná area: ", prum_a)
         
             # -----------------------------------------------------------------------------------------
+            # předpoklad: objekty s menší areou naž je 'small' nejsou kleštíci
             small = (prum_a/4)/2.5
 
             kernel_img2 = skimage.morphology.square(3).astype(np.uint8)
@@ -135,8 +130,6 @@ class VarroaDetector():
             hezky_klestik = 0
             fuj_klestik = 0
             vysledek = np.zeros_like(img_vyrez_v)
-            #vys = obr_k_vyr
-            #vysledek = np.zeros_like(img2_obarveny)
         
             id_hezky = []
             id_fuj = []
@@ -147,7 +140,6 @@ class VarroaDetector():
                 #b = props[i].minor_axis_length
                 #obvod = props[i].perimeter
                 area = props[i].area
-                #nekomp > 12 and nekomp < 14:
                 
                 if min_v_kl < area < max_v_kl: 
                     if 12 < nekomp < 13.8:
